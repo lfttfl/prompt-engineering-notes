@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# 环境变量 / API Key（绝不能提交）
+.env
+.env.local
+.env.*.local
+*.secret
+credentials.json
+api_keys.txt
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# 学习过程产生的本地数据（保持仓库纯净）
+data/
+outputs/
+logs/
+*.log
+*.pdf
+*.docx
+*.xlsx
+
+# 向量库
+chroma_db/
+*.faiss
+*.pkl
+
+# Jupyter
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# 本地笔记草稿
+notes_draft/
+TODO_local.md
+scratchpad/
