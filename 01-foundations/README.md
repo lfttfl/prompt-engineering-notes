@@ -198,4 +198,8 @@ print(f"Token 数: {result.input_tokens}")
 
 ## 📝 我的笔记
 
-<!-- 在这里记录学习心得、踩过的坑、好用的 Prompt 片段 -->
+<!-- 建议记录：
+  - 让我印象最深的一个"烂 vs 好 Prompt"对比
+  - 我自己的 token 数量意识：常用 Prompt 大概多少 token？
+  - temperature 在哪个场景让我感受到了明显差别？
+-->

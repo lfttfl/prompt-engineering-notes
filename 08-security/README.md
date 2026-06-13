@@ -187,10 +187,13 @@
 - [Simon Willison: Prompt Injection Blog](https://simonwillison.net/tags/prompt-injection/)
 - [Anthropic: Reducing harm](https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-harm)
 - [Gandalf（在线越狱游戏，练手好工具）](https://gandalf.lakera.ai/)
+- [调试遇到问题？](../cheatsheets/debugging.md) — 过度谨慎 / 拒答问题查这里
 
 ---
 
 ## 📝 我的笔记
+
+---
 
 ## 🎓 毕业清单（完成 3 个月学习后检查）
 
