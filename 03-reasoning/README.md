@@ -38,6 +38,7 @@
 
 **何时用**：答案空间较窄（数字、分类、选择题）。
 **代价**：成本 ×N，延迟 ×N。
+**温度建议**：运行多次时用中高温度（0.5–0.7）制造多样性；太低则多次输出几乎相同，投票失去意义；太高则输出太乱。
 
 ```
 runs = 5 次
@@ -85,6 +86,41 @@ Final Answer: 建议...
 ```
 
 模块 6 会详细展开。
+
+### 5. Extended Thinking（扩展思考）
+
+Claude 3.7 Sonnet 及之后的模型支持**原生扩展思考**，与手写 `<thinking>` 标签有本质区别：
+
+| | 手写 `<thinking>` 标签 | Extended Thinking API |
+|---|---|---|
+| 机制 | 提示模型把推理写进该标签输出 | API 参数层面的独立 token 预算 |
+| 推理质量 | 受输出 token 限制 | 有专属 thinking budget，推理更深 |
+| 可见性 | 可见（在输出里） | 可选（`betas` 参数控制） |
+| 成本 | 正常输出 token | 独立计费 |
+
+**使用示例**：
+```python
+response = client.messages.create(
+    model="claude-sonnet-4-6",  # 需支持 extended thinking 的模型
+    max_tokens=16000,
+    thinking={
+        "type": "enabled",
+        "budget_tokens": 10000  # 给思考过程分配的 token 上限
+    },
+    messages=[{"role": "user", "content": "...复杂推理问题..."}]
+)
+# 响应里有两种 block：thinking block 和 text block
+for block in response.content:
+    if block.type == "thinking":
+        print("推理过程:", block.thinking[:200], "...")
+    elif block.type == "text":
+        print("最终答案:", block.text)
+```
+
+**何时用 Extended Thinking vs 手写 CoT**：
+- 复杂数学 / 多步逻辑 → Extended Thinking（推理质量更高）
+- 需要在输出里展示推理给用户看 → 手写 `<thinking>` 标签
+- 成本敏感 → 手写 CoT（Extended Thinking 有额外费用）
 
 ---
 

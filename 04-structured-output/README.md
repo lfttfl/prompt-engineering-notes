@@ -126,6 +126,39 @@ response = client.messages.create(
 
 写一个 `safe_parse_json(text, max_retry=2)` 工具函数，能自动 retry。
 
+### Step 4.5：用 Pydantic 替代手写解析（30 分钟）
+
+生产级代码推荐用 Pydantic 代替手写 `json.loads` + 校验：
+
+```python
+from pydantic import BaseModel, field_validator
+from typing import Optional
+import json
+
+class OrderItem(BaseModel):
+    product: str
+    quantity: int
+    unit_price: float
+
+class Order(BaseModel):
+    customer_name: str
+    order_items: list[OrderItem]
+    total_amount: float
+    delivery_date: Optional[str] = None
+
+    @field_validator("total_amount")
+    @classmethod
+    def amount_must_be_positive(cls, v):
+        assert v > 0, "金额必须大于 0"
+        return v
+
+# 解析 LLM 输出
+raw = response.content[0].text
+order = Order.model_validate_json(raw)  # 自动校验，字段不对直接报错
+```
+
+好处：字段类型自动转换，校验错误信息清晰，直接生成 JSON Schema 用于 Tool Use。
+
 ### Step 5：实战项目（2 小时）
 
 ---

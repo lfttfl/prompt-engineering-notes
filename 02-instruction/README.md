@@ -36,6 +36,7 @@
 - 任务简单、标准 → Zero-shot 够用
 - 任务有特定风格 / 格式要求 → Few-shot 准确率可提升 20%–50%
 - 示例数量：通常 3–5 个最优，更多会占 token，边际递减
+- **示例顺序**：最难、最有代表性的例子放最后，模型会更多参考"最近"的示例
 
 ### 2. Chain-of-Thought (CoT)
 
@@ -173,6 +174,7 @@
 - [Anthropic: Use XML tags](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags)
 - [Chain-of-Thought Prompting Paper](https://arxiv.org/abs/2201.11903)
 - [Prompt Engineering Guide（中文）](https://www.promptingguide.ai/zh)
+- [调试遇到问题？](../cheatsheets/debugging.md) — 按症状查修复方案
 
 ---
 

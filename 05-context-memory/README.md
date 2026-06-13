@@ -110,9 +110,22 @@ response = client.messages.create(
 )
 ```
 
+```python
+# 验证是否命中缓存（第二次调用后查看）
+print(f"命中缓存 tokens: {response.usage.cache_read_input_tokens}")
+print(f"写入缓存 tokens: {response.usage.cache_creation_input_tokens}")
+# 命中后 cache_read_input_tokens > 0，说明缓存生效
+```
+
 ### Step 3：最小 RAG 实现（4 小时）
 
-用 Python + Chroma/FAISS + OpenAI Embedding，搭一个 100 行内的 RAG：
+用 Python + Chroma/FAISS + Embedding 模型，搭一个 100 行内的 RAG：
+
+> **Embedding 模型推荐**：
+> - **Voyage AI**（Anthropic 合作方）：`voyage-3` 或 `voyage-3-lite`，中英文都好，与 Claude 配合最佳
+> - **OpenAI**：`text-embedding-3-small`，生态成熟
+> - **开源**：`bge-m3`（中文最强之一，可本地部署）
+
 1. 文档切块
 2. 向量化入库
 3. 查询 → 检索 → 拼 Prompt → 调用 LLM

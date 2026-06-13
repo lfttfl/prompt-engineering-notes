@@ -98,6 +98,33 @@ Thought（思考）→ Action（调工具）→ Observation（看结果）→ Th
 - **预算上限**（如 $0.5 / 任务）
 - **超时**（如 120 秒）
 
+### 6. 并行工具调用
+
+Claude 支持在一次响应中返回多个 `tool_use` blocks，实现并行调用。对需要同时获取多组数据的 Agent（如同时查股价、财报、新闻）可以大幅提升效率：
+
+```python
+# 模型可能一次返回多个工具调用
+for block in resp.content:
+    if block.type == "tool_use":
+        # 收集所有工具调用
+        tool_calls.append(block)
+
+# 并行执行（可用 ThreadPoolExecutor）
+from concurrent.futures import ThreadPoolExecutor
+with ThreadPoolExecutor() as executor:
+    futures = {
+        executor.submit(TOOLS_IMPL[tc.name], **tc.input): tc
+        for tc in tool_calls
+    }
+    # 把所有结果一并回传
+    tool_results = [
+        {"type": "tool_result", "tool_use_id": tc.id, "content": str(f.result())}
+        for f, tc in [(f, futures[f]) for f in futures]
+    ]
+```
+
+**注意**：并行工具调用时，所有 `tool_result` 必须在同一条 `user` 消息里一起回传，不能分开发。
+
 ---
 
 ## 🛠 学习步骤
@@ -134,7 +161,9 @@ while True:
         break
     for block in resp.content:
         if block.type == "tool_use":
-            result = my_weather_api(block.input["city"])
+            # 这里替换为你的真实 API，此处用 mock 演示
+            city = block.input["city"]
+            result = {"city": city, "weather": "晴", "temp": "25°C"}  # mock 数据
             messages.append({"role": "assistant", "content": resp.content})
             messages.append({
                 "role": "user",
