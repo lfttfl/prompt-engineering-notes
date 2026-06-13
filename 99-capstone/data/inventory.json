@@ -1,0 +1,45 @@
+{
+  "products": [
+    {
+      "sku": "RW-10KV-5",
+      "name": "10kV 环网柜（5回路）",
+      "unit": "台",
+      "stock": 12,
+      "list_price": 9.5,
+      "floor_price": 7.8,
+      "lead_time_days": 45,
+      "spec": "额定电压 10kV，额定电流 630A，5 回路，IP3X"
+    },
+    {
+      "sku": "RW-10KV-3",
+      "name": "10kV 环网柜（3回路）",
+      "unit": "台",
+      "stock": 8,
+      "list_price": 6.5,
+      "floor_price": 5.2,
+      "lead_time_days": 30,
+      "spec": "额定电压 10kV，额定电流 630A，3 回路，IP3X"
+    },
+    {
+      "sku": "CB-400A",
+      "name": "低压断路器 400A",
+      "unit": "台",
+      "stock": 50,
+      "list_price": 1.5,
+      "floor_price": 1.0,
+      "lead_time_days": 15,
+      "spec": "额定电流 400A，分断能力 50kA，智能型"
+    },
+    {
+      "sku": "TR-35KV-10MVA",
+      "name": "35kV 主变压器 10MVA",
+      "unit": "台",
+      "stock": 2,
+      "list_price": 95.0,
+      "floor_price": 80.0,
+      "lead_time_days": 120,
+      "spec": "35kV/10kV，10MVA，ONAN 冷却，有载调压"
+    }
+  ],
+  "price_note": "单价单位：万元人民币，含税"
+}

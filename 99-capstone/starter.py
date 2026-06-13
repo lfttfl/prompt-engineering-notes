@@ -186,28 +186,38 @@ def check_safety(draft: str) -> list[str]:
 # ================== 主入口 ==================
 
 def process(req: AgentRequest) -> AgentResponse:
-    # 1. 意向分类
-    intent, confidence = classify_intent(req.raw_input)
-    console.print(f"📊 客户意向: [bold]{intent.value}[/bold] (置信 {confidence:.0%})")
+    try:
+        # 1. 意向分类
+        intent, confidence = classify_intent(req.raw_input)
+        console.print(f"📊 客户意向: [bold]{intent.value}[/bold] (置信 {confidence:.0%})")
 
-    # 2. Agent 主循环(收集信息)
-    agent_output = run_agent(req)
+        # 2. Agent 主循环(收集信息)
+        agent_output = run_agent(req)
 
-    # 3. 邮件起草
-    draft = draft_email(req, agent_output, intent)
+        # 3. 邮件起草
+        draft = draft_email(req, agent_output, intent)
 
-    # 4. 输出审查
-    warnings = check_safety(draft)
-    draft = scrub_sensitive(draft)
+        # 4. 输出审查
+        warnings = check_safety(draft)
+        draft = scrub_sensitive(draft)
 
-    # 5. 组装响应
-    return AgentResponse(
-        draft=draft,
-        intent_level=intent,
-        reasoning=agent_output,
-        confidence=confidence,
-        warnings=warnings,
-    )
+        # 5. 组装响应
+        return AgentResponse(
+            draft=draft,
+            intent_level=intent,
+            reasoning=agent_output,
+            confidence=confidence,
+            warnings=warnings,
+        )
+    except Exception as e:
+        console.print(f"[red]❌ 处理出错: {e}[/red]")
+        return AgentResponse(
+            draft="处理失败，请人工介入或重试。",
+            intent_level=IntentLevel.D,
+            reasoning=f"异常: {e}",
+            confidence=0.0,
+            warnings=["系统错误，需人工处理"],
+        )
 
 
 def demo():

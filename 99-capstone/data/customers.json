@@ -1,0 +1,45 @@
+{
+  "customers": [
+    {
+      "id": "CUST_001",
+      "name": "李经理",
+      "company": "华东新能源有限公司",
+      "level": "A",
+      "contact": "li@huadong-energy.com",
+      "history": [
+        {"date": "2025-11-10", "sku": "RW-10KV-5", "qty": 5, "unit_price": 8.5, "total": 42.5, "status": "completed"},
+        {"date": "2025-08-20", "sku": "RW-10KV-5", "qty": 3, "unit_price": 8.8, "total": 26.4, "status": "completed"},
+        {"date": "2025-03-15", "sku": "CB-400A", "qty": 10, "unit_price": 1.2, "total": 12.0, "status": "completed"}
+      ],
+      "preferences": {
+        "payment": "30/60/10",
+        "delivery_days": 60,
+        "preferred_contact": "email"
+      }
+    },
+    {
+      "id": "CUST_002",
+      "name": "王总",
+      "company": "西部电力建设集团",
+      "level": "B",
+      "contact": "wang@xibuepc.com",
+      "history": [
+        {"date": "2025-10-05", "sku": "TR-35KV-10MVA", "qty": 2, "unit_price": 85.0, "total": 170.0, "status": "completed"}
+      ],
+      "preferences": {
+        "payment": "50/40/10",
+        "delivery_days": 90,
+        "preferred_contact": "phone"
+      }
+    },
+    {
+      "id": "CUST_003",
+      "name": "张采购",
+      "company": "南方市政工程局",
+      "level": "C",
+      "contact": "zhang@nanfang-municipal.gov.cn",
+      "history": [],
+      "preferences": {}
+    }
+  ]
+}
