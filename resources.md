@@ -57,9 +57,9 @@
 - [Anthropic SDK 直接用](https://docs.anthropic.com/en/api/client-sdks) — 很多场景不需要框架
 
 ### Token / 成本计算
-- [OpenAI Tokenizer](https://platform.openai.com/tokenizer)
-- [tiktoken (Python)](https://github.com/openai/tiktoken)
-- [Anthropic Token Counter API](https://docs.anthropic.com/en/api/messages-count-tokens)
+- [Anthropic Token Counter API](https://docs.anthropic.com/en/api/messages-count-tokens) — Claude 官方接口（推荐）
+- [OpenAI Tokenizer](https://platform.openai.com/tokenizer) — 在线工具，OpenAI 模型用
+- [tiktoken (Python)](https://github.com/openai/tiktoken) — OpenAI 的分词库，不适用于 Claude
 
 ### 安全与红队
 - [Gandalf](https://gandalf.lakera.ai/) — 越狱练手游戏

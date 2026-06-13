@@ -35,7 +35,8 @@ prompt-engineering-notes/
 │   └── 08-security/            M8 安全防御 + demo_red_team.py
 │
 ├── 🎓 毕业综合项目
-│   └── 99-capstone/            销售 Agent(整合 M1-M8)
+│   ├── 99-capstone/            销售 Agent(整合 M1-M8)
+│   └── 99-capstone/data/       样本数据(客户档案 + 库存)
 │
 ├── 📦 工具箱
 │   ├── templates/              即拿即用 Prompt 模板(10+ 场景)
@@ -45,6 +46,7 @@ prompt-engineering-notes/
     ├── resources.md            参考资源汇总
     ├── CHANGELOG.md            更新日志
     ├── requirements.txt        Python 依赖
+    ├── .env.example            API Key 配置模板
     └── .gitignore, LICENSE
 ```
 
@@ -71,7 +73,7 @@ prompt-engineering-notes/
 | 路径 | 适合 | 节奏 |
 |---|---|---|
 | **🎯 A · 系统学习** | 想做 AI 产品 | 12 周按顺序 + 每模块实战 + 毕业 Capstone |
-| **⚡ B · 速成实用** | 日常工作用 | M1 + M2 + M4 + M8(≈ 4 周) |
+| **⚡ B · 速成实用** | 日常工作用 | M1 + M2 + M4 + M6 + M8(≈ 5 周) |
 | **🔧 C · 工具使用** | 当参考用 | 直接用 [templates/](./templates/) + [cheatsheets/](./cheatsheets/) |
 
 ---
@@ -82,7 +84,7 @@ prompt-engineering-notes/
 | 天 | 任务 |
 |---|---|
 | Day 1 | 看 Anthropic Prompt Engineering 文档(1h) |
-| Day 2 | 理解 Token,用 tiktoken 数自己 Prompt 的 token(1h) |
+| Day 2 | 理解 Token,用 Anthropic SDK 数自己 Prompt 的 token(1h) |
 | Day 3 | 写 3 个"烂 vs 好"Prompt 对比练习(2h) |
 | Day 4-5 | 跑通 `demo_quote_email.py`,改成自己的场景 |
 | Day 6-7 | 复盘 + 在 01-foundations/README 底部写笔记 |
@@ -160,8 +162,8 @@ source venv/bin/activate          # Linux/Mac
 # venv\Scripts\activate           # Windows
 pip install -r requirements.txt
 
-# 配置 API Key(创建 .env 文件)
-echo "ANTHROPIC_API_KEY=sk-ant-..." > .env
+# 配置 API Key
+cp .env.example .env          # 然后编辑 .env，填入你的 API Key
 
 # 验证
 python 01-foundations/demo_quote_email.py
@@ -205,6 +207,7 @@ python 01-foundations/demo_quote_email.py
 
 ## 📅 版本记录
 
+- **v0.3 (2026-06-13)** — 内容升级:修正技术细节（tiktoken/tokenizer/Self-Consistency 温度）；新增 Extended Thinking / Batch API / 并行工具调用 / Pydantic / temperature 专节；补充 `.env.example` 和 Capstone 样本数据
 - **v0.2 (2026-04-22)** — 工具箱升级:templates、cheatsheets、8 个 Python Demo、Capstone、工程标配文件
 - **v0.1 (2026-04-22)** — 初始版本:8 模块完整教程
 

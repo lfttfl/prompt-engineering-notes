@@ -89,19 +89,19 @@ Final Answer: 建议...
 
 ### 5. Extended Thinking（扩展思考）
 
-Claude 3.7 Sonnet 及之后的模型支持**原生扩展思考**，与手写 `<thinking>` 标签有本质区别：
+`claude-sonnet-4-6` 及更新的模型支持**原生扩展思考**，与手写 `<thinking>` 标签有本质区别：
 
 | | 手写 `<thinking>` 标签 | Extended Thinking API |
 |---|---|---|
 | 机制 | 提示模型把推理写进该标签输出 | API 参数层面的独立 token 预算 |
 | 推理质量 | 受输出 token 限制 | 有专属 thinking budget，推理更深 |
-| 可见性 | 可见（在输出里） | 可选（`betas` 参数控制） |
+| 可见性 | 可见（在输出里） | thinking block 单独返回，不混入正文 |
 | 成本 | 正常输出 token | 独立计费 |
 
 **使用示例**：
 ```python
 response = client.messages.create(
-    model="claude-sonnet-4-6",  # 需支持 extended thinking 的模型
+    model="claude-sonnet-4-6",
     max_tokens=16000,
     thinking={
         "type": "enabled",
