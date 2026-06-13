@@ -112,6 +112,47 @@ def evaluate(prompt_version, eval_set):
     }
 ```
 
+### Step 2.5：用 Batch API 跑 Eval 集（成本减半）
+
+运行大批量评估时，使用 Anthropic Batch API 可以降低 50% 成本：
+
+```python
+import anthropic
+
+client = anthropic.Anthropic()
+
+# 构造批量请求
+batch_requests = [
+    {
+        "custom_id": item["id"],
+        "params": {
+            "model": "claude-sonnet-4-6",
+            "max_tokens": 1024,
+            "messages": [{"role": "user", "content": build_eval_prompt(item)}]
+        }
+    }
+    for item in eval_set
+]
+
+# 提交批次
+batch = client.messages.batches.create(requests=batch_requests)
+print(f"Batch ID: {batch.id}")
+
+# 轮询直到完成（通常几分钟到数小时）
+import time
+while True:
+    status = client.messages.batches.retrieve(batch.id)
+    if status.processing_status == "ended":
+        break
+    time.sleep(30)
+
+# 获取结果
+for result in client.messages.batches.results(batch.id):
+    print(result.custom_id, result.result.message.content[0].text)
+```
+
+**适用场景**：Eval 集 > 20 条、不需要实时结果时首选。
+
 ### Step 3：LLM-as-Judge 实现（3 小时）
 
 对同一组输出，用另一个强模型按 Rubric 打分。实现"交换位置 + 平均"对抗位置偏见。
