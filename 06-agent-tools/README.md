@@ -125,6 +125,22 @@ with ThreadPoolExecutor() as executor:
 
 **注意**：并行工具调用时，所有 `tool_result` 必须在同一条 `user` 消息里一起回传，不能分开发。
 
+### 7. Streaming（流式输出）
+
+生产环境的 Agent 几乎都需要 Streaming——用户无需等待整个答案生成完才看到内容：
+
+```python
+with client.messages.stream(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "分析这只股票..."}]
+) as stream:
+    for text in stream.text_stream:
+        print(text, end="", flush=True)
+```
+
+**带工具调用的 Streaming**：使用 `stream.get_final_message()` 拿到完整消息（含 `tool_use` blocks）再处理工具逻辑，其余与普通 Streaming 一致。
+
 ---
 
 ## 🛠 学习步骤
@@ -261,6 +277,7 @@ while True:
 - [Anthropic Tool Use 完整指南](https://docs.anthropic.com/en/docs/build-with-claude/tool-use)
 - [ReAct Paper](https://arxiv.org/abs/2210.03629)
 - [Anthropic: Building effective agents](https://www.anthropic.com/research/building-effective-agents)
+- [调试遇到问题？](../cheatsheets/debugging.md) — 工具调用不稳定 / 死循环查这里
 
 ---
 

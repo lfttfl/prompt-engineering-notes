@@ -241,6 +241,7 @@ for result in client.messages.batches.results(batch.id):
 - [Promptfoo（开源 Prompt 评估工具）](https://www.promptfoo.dev/)
 - [LangSmith Evaluations](https://docs.smith.langchain.com/evaluation)
 - [Eugene Yan: Evaluating LLM Applications](https://eugeneyan.com/writing/evals/)
+- [调试遇到问题？](../cheatsheets/debugging.md) — 输出不稳定 / 幻觉查这里
 
 ---
 

@@ -5,6 +5,38 @@
 
 ---
 
+## [0.3.0] - 2026-06-13 · 技术内容升级
+
+### Fixed
+- M1：修正 tiktoken → Anthropic SDK Token Counter（tiktoken 不适用于 Claude）
+- M1：修复 "学习步骤" 标题重复、章节编号跳号问题
+- M3：修正 Self-Consistency 温度建议（0.5–0.7，非越高越好）
+- M3：修正 Extended Thinking 表格描述（移除错误的 `betas` 参数说明）
+- M6：修复代码示例中未定义的 `my_weather_api` 函数
+- README：Day 2 日历任务修正为 Anthropic SDK（原 tiktoken）
+- README：环境准备改用 `cp .env.example .env`
+
+### Added
+- M1：新增 API 消息结构（system vs user）说明
+- M1：新增 temperature 参数专节
+- M2：新增 few-shot 示例顺序影响说明
+- M3：新增 Extended Thinking API 专节（含代码示例和适用场景对比）
+- M4：新增 Pydantic 结构化输出集成示例
+- M5：新增 Voyage AI / BGE-m3 等 Embedding 模型推荐；新增缓存命中验证代码
+- M6：新增并行工具调用章节（含 ThreadPoolExecutor 示例）
+- M7：新增 Batch API 批量评估示例（降本 50%）
+- Capstone：`starter.py` 新增完整异常处理
+- `.env.example`：新增 API Key 配置模板
+- `99-capstone/data/`：新增 customers.json、inventory.json 样本数据
+
+### Changed
+- README：学习路径 B 更新为 M1+M2+M4+M6+M8（补充 Agent 模块）
+- README：仓库结构图补充 `.env.example` 和 `99-capstone/data/`
+- README：版本记录新增 v0.3
+- resources.md：Token 工具列表调整顺序，Anthropic 优先，tiktoken 标注仅适用 OpenAI
+
+---
+
 ## [0.2.0] - 2026-04-22 · 工具箱化升级
 
 ### Added

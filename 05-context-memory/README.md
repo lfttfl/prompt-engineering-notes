@@ -207,6 +207,17 @@ print(f"写入缓存 tokens: {response.usage.cache_creation_input_tokens}")
 - [Lost in the Middle Paper](https://arxiv.org/abs/2307.03172)
 - [LangChain RAG 教程](https://python.langchain.com/docs/tutorials/rag/)
 - [LlamaIndex 入门](https://docs.llamaindex.ai/)
+- [调试遇到问题？](../cheatsheets/debugging.md) — 幻觉 / 稳定性 / 长度问题查这里
+
+---
+
+## 🔗 下一步：从"处理数据"到"执行行动"
+
+完成本模块后，你已经能让模型**读懂**大量信息——长文档、历史对话、知识库。
+
+M6 是下一个跃升：让模型不只是"读"，而是主动**调用工具、采取行动**。你在 M5 里搭的 RAG 检索，将作为 Agent 的一个工具被复用。
+
+→ 继续 [模块 6 · Agent 与工具调用](../06-agent-tools/)
 
 ---
 

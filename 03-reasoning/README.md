@@ -89,19 +89,19 @@ Final Answer: 建议...
 
 ### 5. Extended Thinking（扩展思考）
 
-Claude 3.7 Sonnet 及之后的模型支持**原生扩展思考**，与手写 `<thinking>` 标签有本质区别：
+`claude-sonnet-4-6` 及更新的模型支持**原生扩展思考**，与手写 `<thinking>` 标签有本质区别：
 
 | | 手写 `<thinking>` 标签 | Extended Thinking API |
 |---|---|---|
 | 机制 | 提示模型把推理写进该标签输出 | API 参数层面的独立 token 预算 |
 | 推理质量 | 受输出 token 限制 | 有专属 thinking budget，推理更深 |
-| 可见性 | 可见（在输出里） | 可选（`betas` 参数控制） |
+| 可见性 | 可见（在输出里） | thinking block 单独返回，不混入正文 |
 | 成本 | 正常输出 token | 独立计费 |
 
 **使用示例**：
 ```python
 response = client.messages.create(
-    model="claude-sonnet-4-6",  # 需支持 extended thinking 的模型
+    model="claude-sonnet-4-6",
     max_tokens=16000,
     thinking={
         "type": "enabled",
@@ -143,7 +143,7 @@ for block in response.content:
 ### Step 2：Self-Consistency 实验（3 小时）
 
 - 挑 10 道数学或逻辑题
-- 分别用单次回答 vs 5 次投票
+- 分别用单次回答 vs 5 次投票（`temperature=0.6`，制造多样性）
 - 计算准确率提升
 
 ### Step 3：ToT 在投资分析上的应用（3 小时）
@@ -157,7 +157,31 @@ for block in response.content:
 
 遇到"客户说太贵"这种具体问题，先让模型抽象出"应对价格异议的通用框架"，再套用。
 
-### Step 5：实战项目（3 小时）
+### Step 5：Extended Thinking 实操（1 小时）
+
+对一道复杂推理题，分别用手写 `<thinking>` CoT 和 Extended Thinking API 各跑一次，对比：
+- 推理深度（思路是否更完整）
+- 最终答案准确率
+- token 用量与成本差异
+
+```python
+import anthropic
+client = anthropic.Anthropic()
+
+response = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=16000,
+    thinking={"type": "enabled", "budget_tokens": 8000},
+    messages=[{"role": "user", "content": "你的复杂推理题"}]
+)
+for block in response.content:
+    if block.type == "thinking":
+        print(f"推理过程 ({len(block.thinking)} chars)")
+    else:
+        print("答案:", block.text)
+```
+
+### Step 6：实战项目（3 小时）
 
 ---
 
@@ -213,6 +237,7 @@ for block in response.content:
 - [ ] 能分辨哪类任务需要 Self-Consistency
 - [ ] 理解 ToT 相比 CoT 的增量价值
 - [ ] 会用 Step-back 处理客户沟通场景
+- [ ] 知道 Extended Thinking 和手写 CoT 的适用区别
 - [ ] 完成多视角投资分析助手
 
 ---
@@ -223,6 +248,8 @@ for block in response.content:
 - [Self-Consistency Paper](https://arxiv.org/abs/2203.11171)
 - [Step-Back Prompting](https://arxiv.org/abs/2310.06117)
 - [ReAct Paper](https://arxiv.org/abs/2210.03629)
+- [Anthropic Extended Thinking 文档](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking)
+- [调试遇到问题？](../cheatsheets/debugging.md) — 按症状查修复方案
 
 ---
 
